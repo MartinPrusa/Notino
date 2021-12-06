@@ -14,8 +14,7 @@ struct DashboardView: View {
     let interactor: DashboardInteractor?
     let router: DashboardRouter?
 
-    private let withReduce: CGFloat = 32
-    private let spacing: CGFloat = 8
+    private let withReduce: CGFloat = 16
     
     var body: some View {
         NavigationView {
@@ -23,15 +22,14 @@ struct DashboardView: View {
                 if let description = viewState.errorDescription {
                     Text(description)
                 } else {
-                    let columns: [GridItem] = Array(repeating: .init(.fixed(UIScreen.main.bounds.width/2-withReduce-spacing), spacing: spacing, alignment: .top), count: 2)
+                    let columns: [GridItem] = Array(repeating: .init(.fixed(UIScreen.main.bounds.width/2-withReduce), alignment: .top), count: 2)
                     ScrollView {
-                        LazyVGrid(columns: columns) {
+                        LazyVGrid(columns: columns, alignment: .center) {
                             ForEach(viewState.data) { item in
                                 router?.itemView(item: item)
                                     .padding(.bottom, 24)
                             }
                         }
-                        .padding(.horizontal, 16)
                     }
                 }
             }
